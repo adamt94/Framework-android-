@@ -23,4 +23,6 @@ public class AndroidSound implements Sound {
         soundPool.unload(soundId);
     }
 
+    @Override
+    public void stop(){soundPool.stop(soundId);}
 }

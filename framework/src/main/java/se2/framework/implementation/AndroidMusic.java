@@ -15,22 +15,38 @@ public class AndroidMusic implements Music, OnCompletionListener, OnSeekComplete
     MediaPlayer mediaPlayer;
     boolean isPrepared = false;
 
-    public AndroidMusic(AssetFileDescriptor assetDescriptor) {
+    private static AndroidMusic instance;
+
+    private AndroidMusic(AssetFileDescriptor assetDescriptor) {
+        load(assetDescriptor);
+    }
+
+    private void load(AssetFileDescriptor assetDescriptor){
         mediaPlayer = new MediaPlayer();
-        try {
+        try{
             mediaPlayer.setDataSource(assetDescriptor.getFileDescriptor(),
-                    assetDescriptor.getStartOffset(),
-                    assetDescriptor.getLength());
+            assetDescriptor.getStartOffset(),
+            assetDescriptor.getLength());
             mediaPlayer.prepare();
             isPrepared = true;
             mediaPlayer.setOnCompletionListener(this);
             mediaPlayer.setOnSeekCompleteListener(this);
             mediaPlayer.setOnPreparedListener(this);
             mediaPlayer.setOnVideoSizeChangedListener(this);
-            
-        } catch (Exception e) {
+        } catch (Exception e){
             throw new RuntimeException("Couldn't load music");
         }
+
+    }
+
+    public static AndroidMusic getInstance(AssetFileDescriptor assetDescriptor) {
+        if (instance == null) {
+            instance = new AndroidMusic(assetDescriptor);
+        } else {
+            instance.stop();
+            instance.load(assetDescriptor);
+        }
+            return instance;
     }
 
     @Override
