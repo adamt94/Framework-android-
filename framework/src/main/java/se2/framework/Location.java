@@ -9,16 +9,14 @@ public class Location {
     private String title;
     private String description;
 
-    public Location(double lat, double lon, String name, String desc){
-        latitude = lat;
-        longitude = lon;
-        title = name;
-        description = desc;
+    public Location(double latitude, double longitude, String title, String description){
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.title = title;
+        this.description = description;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
+    public double getLatitude() { return latitude; }
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
