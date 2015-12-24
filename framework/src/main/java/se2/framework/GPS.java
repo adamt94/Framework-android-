@@ -1,11 +1,13 @@
 package se2.framework;
 
+import android.location.Location;
+
 /**
  * Created by BEN on 17/12/2015.
  */
-public interface GPS {
+public interface GPS{
 
-    public void onLocationChange();
+    public void onLocationChanged();
 
     public Location getLocation();
 
