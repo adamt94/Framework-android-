@@ -11,11 +11,11 @@ public interface Notification {
 
     public void setContentText(String text);
 
-    public Image setSmallIcon();
+    public Image getSmallIcon();
 
-    public String setContentTitle();
+    public String getContentTitle();
 
-    public String setContentText();
+    public String getContentText();
 
     public void cancel();
 
