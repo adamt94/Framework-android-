@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="se2.saaf.HomeScreen"
+    tools:context=".locationFinder.HomeScreen"
     tools:showIn="@layout/activity_home_screen">
 
 </RelativeLayout>
