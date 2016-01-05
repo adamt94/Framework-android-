@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import se2.saaf.framework.MapData;
-
 /**
  * Created by BEN on 17/12/2015.
  */
