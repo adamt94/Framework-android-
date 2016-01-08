@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat.Builder;
 import se2.saaf.R;
 import se2.saaf.framework.Image;
 import se2.saaf.framework.Notification;
+import se2.saaf.locationFinder.HomeScreen;
 
 /**
  * Created by BEN on 17/12/2015.
@@ -30,26 +31,33 @@ public class AndroidNotification implements Notification {
 
     @Override
     public void createNotification(int id, String title, String content) {
-        builder = new Builder(context).setSmallIcon(0);
+        builder = new Builder(context);
         builder.setSmallIcon(android.support.v7.appcompat.R.drawable.notification_template_icon_bg);
         builder.setContentTitle(title);
         builder.setContentText(content);
+        builder.setAutoCancel(true);
         Intent rIntent = new Intent();
         manager.notify(id,builder.build());
     }
 
     @Override
     public void updateNotification(int id, String title, String content){
-
+        builder = new Builder(context);
+        builder.setSmallIcon(android.support.v7.appcompat.R.drawable.notification_template_icon_bg);
+        if(title != null) builder.setContentTitle(title);
+        if(title != null)builder.setContentText(content);
+        builder.setAutoCancel(true);
+        Intent rIntent = new Intent();
+        manager.notify(id,builder.build());
     }
 
     @Override
     public void cancelNotificaiton(int id) {
-
+        manager.cancel(id);
     }
 
     @Override
     public void cancelAll() {
-
+        manager.cancelAll();
     }
 }
