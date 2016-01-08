@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 
 import se2.saaf.R;
@@ -36,6 +37,7 @@ public class AndroidNotification implements Notification {
         builder.setContentTitle(title);
         builder.setContentText(content);
         builder.setAutoCancel(true);
+        builder.setCategory(NotificationCompat.CATEGORY_EVENT);
         Intent rIntent = new Intent();
         manager.notify(id,builder.build());
     }
