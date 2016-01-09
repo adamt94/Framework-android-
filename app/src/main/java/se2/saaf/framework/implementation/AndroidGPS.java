@@ -9,6 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.widget.Toast;
 
 import se2.saaf.framework.GPS;
 
@@ -17,7 +18,6 @@ import se2.saaf.framework.GPS;
  */
 public class AndroidGPS implements GPS {
     private boolean GPS = false;
-    private boolean Network = false;
     private LocationManager locationManager;
     private AndroidLocationListener locationListener;
     private Activity activity;
@@ -27,43 +27,58 @@ public class AndroidGPS implements GPS {
         locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
     }
 
-    private class AndroidLocationListener implements LocationListener
-    {
+    private class AndroidLocationListener implements LocationListener {
 
         Location myLocation;
+
         @Override
         public void onLocationChanged(Location location) {
             myLocation = location;
         }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
 
         @Override
-        public void onProviderEnabled(String provider) {}
+        public void onProviderEnabled(String provider) {
+        }
 
         @Override
-        public void onProviderDisabled(String provider) {}
+        public void onProviderDisabled(String provider) {
+        }
     }
 
     @Override
     public Location getLocation() {
 
-        if (GPS || Network)
-        {
-            return locationListener.myLocation;
-        }
-        return null;
+        return locationListener.myLocation;
     }
 
     @Override
     public void enableLocation() {
-
+        GPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (GPS) {
+            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(activity, "Permission Not Granted", Toast.LENGTH_SHORT).show();
+            } else {
+                locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+            }
+        } else {
+            Toast.makeText(activity, "GPS unavailable", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void disableLocation() {
-
+        GPS = false;
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(activity, "Permission Not Granted", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            locationManager.removeUpdates(locationListener);
+        }
     }
 
 
