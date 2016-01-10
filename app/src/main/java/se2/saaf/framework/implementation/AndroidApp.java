@@ -23,6 +23,7 @@ public class AndroidApp implements App{
     private FileIO fileIO;
     private Notification notification;
     private GPS gps;
+    private Database database;
     private PowerManager.WakeLock wakeLock;
 
     public AndroidApp(Activity activity) {
@@ -33,6 +34,7 @@ public class AndroidApp implements App{
         fileIO = new AndroidFileIO(activity);
         notification = new AndroidNotification(activity);
         gps = new AndroidGPS(activity);
+        database = new Database(activity.getAssets(),"");
 
     }
 
@@ -65,4 +67,11 @@ public class AndroidApp implements App{
     public GPS getGPS() {
         return gps;
     }
+
+    @Override
+    public Database getDatabase() {
+        return database;
+    }
+
+
 }

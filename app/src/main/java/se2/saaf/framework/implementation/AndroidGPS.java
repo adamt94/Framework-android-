@@ -10,9 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
-
 import se2.saaf.framework.GPS;
-
 /**
  * Created by BEN on 17/12/2015.
  */
@@ -25,11 +23,13 @@ public class AndroidGPS implements GPS {
     public AndroidGPS(Activity activity) {
         // Acquire a reference to the system Location Manager
         locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new AndroidLocationListener();
+        this.activity = activity;
     }
 
     private class AndroidLocationListener implements LocationListener {
 
-        Location myLocation;
+        Location myLocation = new Location(LocationManager.NETWORK_PROVIDER);
 
         @Override
         public void onLocationChanged(Location location) {
@@ -51,19 +51,18 @@ public class AndroidGPS implements GPS {
 
     @Override
     public Location getLocation() {
-
         return locationListener.myLocation;
     }
 
     @Override
     public void enableLocation() {
-        GPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        GPS = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         if (GPS) {
             if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(activity, "Permission Not Granted", Toast.LENGTH_SHORT).show();
             } else {
                 locationManager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                        LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
             }
         } else {
             Toast.makeText(activity, "GPS unavailable", Toast.LENGTH_SHORT).show();
