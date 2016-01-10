@@ -28,14 +28,15 @@ public class AndroidApp implements App{
 
     public AndroidApp(Activity activity) {
         this.activity = activity;
-        graphics = new AndroidGraphics(activity.getAssets(), );
+        graphics = new AndroidGraphics(activity.getAssets(), Bitmap.createBitmap(480,800, Bitmap.Config.RGB_565));
         audio = new AndroidAudio(activity);
-        input = new AndroidInput();
+        input = new AndroidInput(activity,activity.getCurrentFocus(),480/ activity.getWindowManager().getDefaultDisplay().getWidth(),800/ activity.getWindowManager().getDefaultDisplay().getWidth());
         fileIO = new AndroidFileIO(activity);
         notification = new AndroidNotification(activity);
         gps = new AndroidGPS(activity);
         database = new Database(activity.getAssets(),"");
-
+        PowerManager powerManager = (PowerManager) activity.getSystemService(activity.getApplicationContext().POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyGame");
     }
 
     @Override
