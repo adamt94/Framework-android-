@@ -61,14 +61,13 @@ public class AndroidNotification implements Notification {
         manager.cancelAll();
     }
 
-    public void Remind (int time, String title, String message)
+    public void remind (int time, String title, String message)
     {
-        Intent alarmIntent = new Intent(context,AlarmReceiver);
+        Intent alarmIntent = new Intent(context,AlarmReceiver.class);
         alarmIntent.putExtra("message", message);
         alarmIntent.putExtra("title", title);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, "time", PendingIntent.getBroadcast(context,alarmIntent, PendingIntentFlags.UpdateCurrent));
-
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, time, PendingIntent.getBroadcast(context,0,alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT));
     }
 
     public class AlarmReceiver extends BroadcastReceiver
@@ -83,7 +82,6 @@ public class AndroidNotification implements Notification {
             builder.setContentText(message);
             builder.setAutoCancel(true);
             builder.setCategory(NotificationCompat.CATEGORY_EVENT);
-            Intent rIntent = new Intent();
             manager.notify(0,builder.build());
         }
     }

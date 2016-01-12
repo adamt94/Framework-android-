@@ -7,6 +7,7 @@ import android.os.PowerManager;
 import se2.saaf.framework.App;
 import se2.saaf.framework.Audio;
 import se2.saaf.framework.FileIO;
+import se2.saaf.framework.FrameworkCopyright;
 import se2.saaf.framework.GPS;
 import se2.saaf.framework.Graphics;
 import se2.saaf.framework.Input;

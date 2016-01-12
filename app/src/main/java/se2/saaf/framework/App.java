@@ -9,15 +9,15 @@ public interface App {
 
     public Audio getAudio();
 
-    public Input getInput();
+    public Database getDatabase();
 
     public FileIO getFileIO();
 
-    public Graphics getGraphics();
-
-    public Notification getNotification();
-
     public GPS getGPS();
 
-    public Database getDatabase();
+    public Graphics getGraphics();
+
+    public Input getInput();
+
+    public Notification getNotification();
 }
